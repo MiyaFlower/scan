@@ -148,16 +148,28 @@ export default {
   },
   methods: {
     ...mapActions(['getDebtDetail']),
-    getDetail (hash) {
-      this.getDebtDetail(hash)
+    getDetail (params) {
+      if (params.height) {
+        let data = {
+          height: params.height,
+          s: this.shardValue
+        }
+        this.getDebtDetail(data)
+      } else if (params.hash) {
+        let data = {
+          hash: params.hash,
+          s: this.shardValue
+        }
+        this.getDebtDetail(data)
+      }
     },
-    toFrom (txhash) {
-      return filtersAd(txhash)
-        ? router.push({ path: '/transaction/detail', query: { txHash: txhash } })
+    toFrom (txHash) {
+      return filtersAd(txHash)
+        ? router.push({ path: '/transaction/detail', query: { txhash: txHash } })
         : ''
     },
-    isLink (txhash) {
-      return filtersAd(txhash)
+    isLink (txHash) {
+      return filtersAd(txHash)
     }
   }
 }
